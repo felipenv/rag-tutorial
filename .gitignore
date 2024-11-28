@@ -3,5 +3,5 @@
 .idea
 .ipynb_checkpoints/
 data/raw/.DS_Store
-DS_Store
+.DS_Store
 sample*
