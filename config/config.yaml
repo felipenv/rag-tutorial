@@ -1,8 +1,0 @@
-data:
-  raw:
-    deadpool:
-      path: "data/raw/deadpool/deadpool-2016.pdf"
-      type: "pdf"
-    shakespeare:
-      path: "data/raw/shakespeare"
-      type: "html"

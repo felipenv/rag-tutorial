@@ -2,6 +2,7 @@ import pdfplumber
 import tiktoken
 
 import faiss
+from bs4 import BeautifulSoup
 from llama_index.embeddings.openai import OpenAIEmbedding
 import numpy as np
 import os
@@ -51,11 +52,30 @@ class Ingest:
          Returns:
          - chunks (list): List of text chunks.
          """
-        full_text = ""
-
         # Read the full text from the TXT file
         with open(txt_path, "r", encoding="utf-8") as txt:
             full_text = txt.read()
+
+        return self._chunking(full_text, tokenizer, max_tokens=max_tokens)
+
+    def html_to_chunks(self, html_path, max_tokens):
+        """
+         Converts a HTML file to text chunks for vector database preparation.
+
+         Parameters:
+         - html_path (str): Path to the input PDF file.
+         - chunk_size (int): Maximum size of each text chunk in characters.
+
+         Returns:
+         - chunks (list): List of text chunks.
+         """
+
+        with open(html_path, "r", encoding="utf-8") as h:
+            html = h.read()
+
+        soup = BeautifulSoup(html, 'html.parser')
+        texts = soup.find_all(['h3', 'b', 'blockquote'])
+        full_text = "\n".join([text.get_text() for text in texts if text.b is None])
 
         return self._chunking(full_text, tokenizer, max_tokens=max_tokens)
 
