@@ -7,6 +7,7 @@ import logging
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+emb_model = os.getenv("EMBEDDING_MODEL", "text-embedding-3-large")
 
 
 class RAG:
@@ -34,7 +35,7 @@ class RAG:
         logging.info(f"Querying FAISS index: '{faiss_index_file}'")
 
         # Initialize OpenAI embedding model
-        embedding_model = OpenAIEmbedding(model="text-embedding-3-large")
+        embedding_model = OpenAIEmbedding(model=emb_model)
 
         # Generate embedding for the query
         query_vector = embedding_model.get_text_embedding(query_text)

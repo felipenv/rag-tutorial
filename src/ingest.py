@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 
 tokenizer = tiktoken.get_encoding("cl100k_base")
+emb_model = os.getenv("EMBEDDING_MODEL", "text-embedding-3-large")
 
 
 class Ingest:
@@ -125,7 +126,7 @@ class Ingest:
         - Metadata to a file named <index_name>_metadata.npy.
         """
         # Initialize OpenAI embedding model
-        embedding_model = OpenAIEmbedding(model="text-embedding-3-large")
+        embedding_model = OpenAIEmbedding(model=emb_model)
         os.makedirs(folder, exist_ok=True)
         # Embed chunks into vectors
         embeddings = [embedding_model.get_text_embedding(chunk) for chunk in chunks]
